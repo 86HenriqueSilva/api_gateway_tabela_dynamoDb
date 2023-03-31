@@ -1,0 +1,2 @@
+# api_gateway_tabela_dynamoDb
+amazon_cognitivo
