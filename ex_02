@@ -1,0 +1,17 @@
+import boto3
+
+def lambda_handler(event, context):
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('nome_da_tabela')
+    
+    response = table.scan()
+    items = response['Items']
+    
+    while 'LastEvaluatedKey' in response:
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        items.extend(response['Items'])
+    
+    return {
+        'statusCode': 200,
+        'body': items
+    }
